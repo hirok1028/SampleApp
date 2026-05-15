@@ -10,7 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_090435) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_15_081129) do
+  create_table "follow_relationships", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "followed_id"
+    t.integer "follower_id"
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_follow_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_follow_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_follow_relationships_on_follower_id"
+  end
+
+  create_table "reply_relationships", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "main_tweet_id"
+    t.integer "reply_tweet_id"
+    t.datetime "updated_at", null: false
+    t.index ["main_tweet_id"], name: "index_reply_relationships_on_main_tweet_id"
+    t.index ["reply_tweet_id"], name: "index_reply_relationships_on_reply_tweet_id"
+  end
+
+  create_table "tweets", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id", "created_at"], name: "index_tweets_on_user_id_and_created_at"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "image"
