@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "users/index"
   get "static_pages/home"
   root 'static_pages#home'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -15,4 +16,9 @@ Rails.application.routes.draw do
   # root "posts#index"
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
+  get '/:nickname', to: 'users#show'
+  get '/:nickname/followers', to:'users#show_followers'
+  get '/:nickname/followings', to:'users#show_followings'
+  resources :tweets, only:[:create,:destroy]
+  resources :follow_relationships, only:[:create,:destroy]
 end
