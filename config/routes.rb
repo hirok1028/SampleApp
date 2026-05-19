@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get '/:nickname', to: 'users#show'
   get '/:nickname/followers', to:'users#show_followers'
   get '/:nickname/followings', to:'users#show_followings'
-  resources :tweets, only:[:create,:destroy]
+  post '/tweets/reply'
+  resources :tweets, only:[:create,:destroy,:show]
   resources :follow_relationships, only:[:create,:destroy]
 end
